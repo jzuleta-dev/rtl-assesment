@@ -36,3 +36,13 @@ After the hooks [`introduction in React 16.8`](https://reactjs.org/docs/hooks-in
 As a personal preference I would have rather use React Context for the state management.
 
 As an improvement to save some request I would have been better to consume this resource `https://api.tvmaze.com/shows/1?embed=episodes` which includes also the episodes saving the need to make two API calls.
+
+## TODO
+
+- Change fetch for axios (better catch of errors)
+- Remove Async component.
+- Remove Redux/Toolkit
+- Add Context API
+- Add State Management through hooks.
+- Image lazy loading
+- Better UI/UX integration.
