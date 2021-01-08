@@ -57,7 +57,11 @@ export const ShowDetails = ({ params }) => {
         <Button onClick={() => pushLocation(`/shows/${nextShow}`)}>Next</Button>
       </NavigationButtonsContainer>
       <Async state={showState} error={error}>
-        {show ? <Show show={show} /> : "Loading was ok but sumthings fuccked"}
+        {show ? (
+          <Show show={show} />
+        ) : (
+          "Loading was okay but something went wrong"
+        )}
       </Async>
 
       <Async state={episodeState} error={error}>
