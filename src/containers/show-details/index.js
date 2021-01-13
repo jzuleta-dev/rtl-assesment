@@ -1,9 +1,8 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Async } from "../../components/async/index.js";
 import { EpisodesList } from "../../components/episodes-list/index.js";
 import { Show } from "../../components/show/index.js";
-import { selectors, fetchShow, fetchEpisodes } from "./showSlide.js";
+import { selectors, fetchShowAndEpisodes } from "./showSlide.js";
 import { useLocation } from "wouter";
 import styled from "styled-components";
 
@@ -35,15 +34,12 @@ export const ShowDetails = ({ params }) => {
   const [nextShow, setNextShow] = React.useState(0);
   const [prevShow, setPrevShow] = React.useState(0);
   const show = useSelector(selectors.show);
+  const loading = useSelector(selectors.loading);
   const episodes = useSelector(selectors.episodes);
-  const showState = useSelector(selectors.showStatus);
-  const episodeState = useSelector(selectors.episodesStatus);
-  const error = useSelector(selectors.error);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    fetchShow(showId)(dispatch);
-    fetchEpisodes(showId)(dispatch);
+    fetchShowAndEpisodes(showId)(dispatch);
     setNextShow(Number(showId) + 1);
     setPrevShow(Number(showId) - 1);
   }, [showId, dispatch]);
@@ -56,21 +52,14 @@ export const ShowDetails = ({ params }) => {
         </Button>
         <Button onClick={() => pushLocation(`/shows/${nextShow}`)}>Next</Button>
       </NavigationButtonsContainer>
-      <Async state={showState} error={error}>
-        {show ? (
-          <Show show={show} />
-        ) : (
-          "Loading was okay but something went wrong"
-        )}
-      </Async>
-
-      <Async state={episodeState} error={error}>
-        {episodes ? (
-          <EpisodesList showId={showId} episodes={episodes} />
-        ) : (
-          "Loading was okay but something happened"
-        )}
-      </Async>
+      {loading ? (
+        "Loading"
+      ) : (
+        <React.Fragment>
+          {show && <Show show={show} />}
+          {episodes && <EpisodesList showId={showId} episodes={episodes} />}
+        </React.Fragment>
+      )}
     </ShowDetailContainer>
   );
 };
