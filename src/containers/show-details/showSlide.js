@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getShowById, getShowEpisodesById } from "../../services";
+import {
+  getShowById,
+  getShowEpisodesById,
+  getShowAndEpisodesById,
+} from "../../services";
 import { s } from "../../components/async/index.js";
 
 export const showSlice = createSlice({
@@ -7,11 +11,27 @@ export const showSlice = createSlice({
   initialState: {
     show: null,
     episodes: null,
+    loading: false,
     episodesStatus: s.initial,
     showStatus: s.initial,
     error: false,
   },
   reducers: {
+    getFullShow: (state, action) => ({
+      ...state,
+      loading: true,
+    }),
+    getFullShowSuccess: (state, action) => ({
+      ...state,
+      show: action.payload,
+      episodes: action.payload._embedded.episodes,
+      loading: false,
+    }),
+    getFullShowError: (state, action) => ({
+      ...state,
+      loading: false,
+      error: true,
+    }),
     getShow: (state, action) => ({
       ...state,
       showStatus: s.loading,
@@ -50,6 +70,9 @@ export const {
   getEpisodes,
   getEpisodesSuccess,
   getEpisodesError,
+  getFullShow,
+  getFullShowSuccess,
+  getFullShowError,
 } = showSlice.actions;
 export const selectors = {
   show: (state) => state.showReducer.show,
@@ -82,6 +105,17 @@ export const fetchEpisodes = (id) => async (dispatch) => {
     dispatch(getEpisodesSuccess(episodes));
   } catch (e) {
     dispatch(getEpisodesError(e));
+  }
+};
+
+export const fetchShowAndEpisodes = (id) => async (dispatch) => {
+  dispatch(getFullShow());
+  try {
+    const showAndEpisodes = await getShowAndEpisodesById(id);
+    console.log(showAndEpisodes);
+    dispatch(getFullShowSuccess(showAndEpisodes));
+  } catch (e) {
+    dispatch(getFullShowError(e));
   }
 };
 
