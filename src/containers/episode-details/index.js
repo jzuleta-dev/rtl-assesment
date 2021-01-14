@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Episode } from "../../components/episode";
-import { selectors, fetchEpisodes } from "../show-details/showSlide";
+import { selectors, fetchEpisodes } from "../../slides/showSlide";
 
 export const EpisodeDetails = ({ params }) => {
   const { showId, episodeId } = params;

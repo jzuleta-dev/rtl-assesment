@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { EpisodesList } from "../../components/episodes-list/index.js";
 import { Show } from "../../components/show/index.js";
-import { selectors, fetchShowAndEpisodes } from "./showSlide.js";
+import { selectors, fetchShowAndEpisodes } from "../../slides/showSlide";
 import { useLocation } from "wouter";
 import styled from "styled-components";
 

@@ -3,8 +3,7 @@ import {
   getShowById,
   getShowEpisodesById,
   getShowAndEpisodesById,
-} from "../../services";
-import { s } from "../../components/async/index.js";
+} from "../services";
 
 export const showSlice = createSlice({
   name: "show",
@@ -12,8 +11,6 @@ export const showSlice = createSlice({
     show: null,
     episodes: null,
     loading: false,
-    episodesStatus: s.initial,
-    showStatus: s.initial,
     error: false,
   },
   reducers: {
@@ -34,31 +31,35 @@ export const showSlice = createSlice({
     }),
     getShow: (state, action) => ({
       ...state,
-      showStatus: s.loading,
+      loading: true,
     }),
     getShowSuccess: (state, action) => ({
       ...state,
-      showStatus: s.success,
+      loading: false,
       show: action.payload,
     }),
     getShowError: (state, action) => ({
       ...state,
-      showStatus: s.error,
+      loading: false,
       error: action.payload,
     }),
     getEpisodes: (state, action) => ({
       ...state,
-      episodesStatus: s.loading,
+      loading: true,
     }),
     getEpisodesSuccess: (state, action) => ({
       ...state,
-      episodesStatus: s.success,
+      loading: false,
       episodes: action.payload,
     }),
     getEpisodesError: (state, action) => ({
       ...state,
-      episodesStatus: s.error,
+      loading: false,
       error: action.payload,
+    }),
+    clearErrors: (state, action) => ({
+      ...state,
+      error: false,
     }),
   },
 });
@@ -73,19 +74,22 @@ export const {
   getFullShow,
   getFullShowSuccess,
   getFullShowError,
+  clearErrors,
 } = showSlice.actions;
 export const selectors = {
   show: (state) => state.showReducer.show,
   episodes: (state) => state.showReducer.episodes,
   loading: (state) => state.showReducer.loading,
   error: (state) => state.showReducer.error,
-  showStatus: (state) => state.showReducer.showStatus,
-  episodesStatus: (state) => state.showReducer.episodesStatus,
   episodeById: (id) => (state) =>
     state.showReducer.episodes &&
     state.showReducer.episodes.filter(
       (episode) => episode.id === Number(id)
     )[0],
+};
+
+export const clearErrorFromState = () => (dispatch) => {
+  dispatch(clearErrors());
 };
 
 export const fetchShow = (id) => async (dispatch) => {
