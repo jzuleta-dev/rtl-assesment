@@ -7,7 +7,7 @@ export const s = {
 };
 
 export const Async = ({ children, state, error }) => {
-  const location = useLocation();
+  const [, pushLocation] = useLocation();
 
   switch (state) {
     case s.initial:
@@ -15,7 +15,7 @@ export const Async = ({ children, state, error }) => {
     case s.loading:
       return "loading";
     case s.error:
-      location.pushLocation("/404");
+      pushLocation("/404");
       return null;
     case s.success:
       return children;

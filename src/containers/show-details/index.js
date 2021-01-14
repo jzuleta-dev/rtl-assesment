@@ -31,7 +31,7 @@ const Button = styled.button`
 
 export const ShowDetails = ({ params }) => {
   const { showId } = params;
-  const location = useLocation();
+  const [, pushLocation] = useLocation();
   const [nextShow, setNextShow] = React.useState(0);
   const [prevShow, setPrevShow] = React.useState(0);
   const show = useSelector(selectors.show);
@@ -51,12 +51,10 @@ export const ShowDetails = ({ params }) => {
   return (
     <ShowDetailContainer>
       <NavigationButtonsContainer>
-        <Button onClick={() => location.pushLocation(`/shows/${prevShow}`)}>
+        <Button onClick={() => pushLocation(`/shows/${prevShow}`)}>
           Previous
         </Button>
-        <Button onClick={() => location.pushLocation(`/shows/${nextShow}`)}>
-          Next
-        </Button>
+        <Button onClick={() => pushLocation(`/shows/${nextShow}`)}>Next</Button>
       </NavigationButtonsContainer>
       <Async state={showState} error={error}>
         {show ? (
