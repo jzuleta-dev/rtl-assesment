@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import errorLogo from "../../error.jpeg";
+import errorLogo from "error.jpeg";
 import { useLocation } from "wouter";
 import { useDispatch } from "react-redux";
 import { clearErrorFromState } from "../../slides/showSlide";

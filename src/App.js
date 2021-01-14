@@ -1,11 +1,11 @@
 import "./App.css";
 import styled from "styled-components";
 import { Route } from "wouter";
-import { Container } from "./containers/container";
-import { ShowDetails } from "./containers/show-details";
-import { EpisodeDetails } from "./containers/episode-details";
-import { NotFound404 } from "./containers/not-found";
-import { ErrorBounderies } from "./containers/error-bounderies";
+import { Container } from "containers/container";
+import { ShowDetails } from "containers/show-details";
+import { EpisodeDetails } from "containers/episode-details";
+import { NotFound404 } from "containers/not-found";
+import { ErrorBounderies } from "containers/error-bounderies";
 const AppContainer = styled.div`
   width: 100%;
   max-width: 700px;

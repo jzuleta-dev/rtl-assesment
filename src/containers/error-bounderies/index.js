@@ -1,7 +1,7 @@
 import React from "react";
-import { selectors } from "../../slides/showSlide";
+import { selectors } from "slides/showSlide";
 import { useSelector } from "react-redux";
-import { NotFound404 } from "../not-found";
+import { NotFound404 } from "containers/not-found";
 export const ErrorBounderies = ({ children }) => {
   const error = useSelector(selectors.error);
 

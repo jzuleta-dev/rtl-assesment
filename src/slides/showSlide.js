@@ -3,7 +3,7 @@ import {
   getShowById,
   getShowEpisodesById,
   getShowAndEpisodesById,
-} from "../services";
+} from "services";
 
 export const showSlice = createSlice({
   name: "show",
