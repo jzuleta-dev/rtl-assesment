@@ -23,12 +23,14 @@ const Button = styled.button`
   text-transform: uppercase;
 `;
 export const NotFoun404 = () => {
-  const [path, pushLocation] = useLocation();
+  const location = useLocation();
   return (
     <ErrorPageContainer>
       <Image src={errorLogo} className="App-logo" alt="logo" />
       <p>Oops that show doesn't exists</p>
-      <Button onClick={() => pushLocation("/")}>Go to the landing page</Button>
+      <Button onClick={() => location.pushLocation("/")}>
+        Go to the landing page
+      </Button>
     </ErrorPageContainer>
   );
 };

@@ -17,23 +17,22 @@ const Input = styled.input`
   font-size: 16px;
 `;
 export const Container = () => {
-  const [path, pushLocation] = useLocation();
+  const location = useLocation();
   const [search, setSearch] = React.useState("");
   const handleQueryChange = (evt) => {
     setSearch(evt.target.value);
   };
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log(path);
     search === ""
-      ? pushLocation(DEFAULT_ROUTE)
-      : pushLocation(`/shows/${search}`);
+      ? location.pushLocation(DEFAULT_ROUTE)
+      : location.pushLocation(`/shows/${search}`);
   };
 
   React.useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.keyCode === 32) {
-        pushLocation(DEFAULT_ROUTE);
+        location.pushLocation(DEFAULT_ROUTE);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -42,7 +41,7 @@ export const Container = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [pushLocation]);
+  }, [location]);
   return (
     <LandingContainer>
       <p>
