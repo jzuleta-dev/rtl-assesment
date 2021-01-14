@@ -5,6 +5,7 @@ import { Show } from "../../components/show/index.js";
 import { selectors, fetchShowAndEpisodes } from "../../slides/showSlide";
 import { useLocation } from "wouter";
 import styled from "styled-components";
+import Spinner from "../../components/Spinner/index.js";
 
 const ShowDetailContainer = styled.div`
   display: flex;
@@ -53,7 +54,7 @@ export const ShowDetails = ({ params }) => {
         <Button onClick={() => pushLocation(`/shows/${nextShow}`)}>Next</Button>
       </NavigationButtonsContainer>
       {loading ? (
-        "Loading"
+        <Spinner />
       ) : (
         <React.Fragment>
           {show && <Show show={show} />}
