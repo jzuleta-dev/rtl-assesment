@@ -1,5 +1,9 @@
 # Powerpuff RTL
 
+## Demo
+
+https://youthful-kepler-4b47b2.netlify.app/
+
 ## Objective
 
 The goal on this project is to consume the [TV Maze](http://www.tvmaze.com/api) to display the TV Show "Powerpuff Girls" and an episode detail page with information about specific episodes.

@@ -17,14 +17,13 @@ const Input = styled.input`
   font-size: 16px;
 `;
 export const Container = () => {
-  const [path, pushLocation] = useLocation();
+  const [, pushLocation] = useLocation();
   const [search, setSearch] = React.useState("");
   const handleQueryChange = (evt) => {
     setSearch(evt.target.value);
   };
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log(path);
     search === ""
       ? pushLocation(DEFAULT_ROUTE)
       : pushLocation(`/shows/${search}`);

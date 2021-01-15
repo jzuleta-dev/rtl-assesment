@@ -25,7 +25,7 @@ const Button = styled.button`
   text-transform: uppercase;
 `;
 export const NotFound404 = () => {
-  const [path, pushLocation] = useLocation();
+  const [, pushLocation] = useLocation();
 
   const dispatch = useDispatch();
 

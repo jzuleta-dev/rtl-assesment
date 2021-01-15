@@ -31,7 +31,7 @@ const Button = styled.button`
 
 export const ShowDetails = ({ params }) => {
   const { showId } = params;
-  const [path, pushLocation] = useLocation();
+  const [, pushLocation] = useLocation();
   const [nextShow, setNextShow] = React.useState(0);
   const [prevShow, setPrevShow] = React.useState(0);
   const show = useSelector(selectors.show);
