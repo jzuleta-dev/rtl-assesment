@@ -1,6 +1,8 @@
 import styled from "styled-components";
-import errorLogo from "../../404.png";
+import errorLogo from "error.jpeg";
 import { useLocation } from "wouter";
+import { useDispatch } from "react-redux";
+import { clearErrorFromState } from "../../slides/showSlide";
 const ErrorPageContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -22,13 +24,21 @@ const Button = styled.button`
   padding: 0.5em 0.75em;
   text-transform: uppercase;
 `;
-export const NotFoun404 = () => {
+export const NotFound404 = () => {
   const [, pushLocation] = useLocation();
+
+  const dispatch = useDispatch();
+
+  function returnToLandingPage() {
+    clearErrorFromState()(dispatch);
+    pushLocation("/");
+  }
+
   return (
     <ErrorPageContainer>
-      <Image src={errorLogo} className="App-logo" alt="logo" />
+      <Image src={errorLogo} className="App-logo" alt="logo" loading="lazy" />
       <p>Oops that show doesn't exists</p>
-      <Button onClick={() => pushLocation("/")}>Go to the landing page</Button>
+      <Button onClick={returnToLandingPage}>Go to the landing page</Button>
     </ErrorPageContainer>
   );
 };

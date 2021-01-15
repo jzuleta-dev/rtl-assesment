@@ -23,3 +23,14 @@ export const getShowEpisodesById = (id) =>
       }
     })
     .then(fromApiResponseToShow);
+
+export const getShowAndEpisodesById = (id) =>
+  fetch(`${API_URL}/shows/${id}?embed=episodes`)
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        return Promise.reject();
+      }
+    })
+    .then(fromApiResponseToShow);

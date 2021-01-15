@@ -1,44 +1,65 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getShowById, getShowEpisodesById } from "../../services";
-import { s } from "../../components/async/index.js";
+import {
+  getShowById,
+  getShowEpisodesById,
+  getShowAndEpisodesById,
+} from "services";
 
 export const showSlice = createSlice({
   name: "show",
   initialState: {
     show: null,
     episodes: null,
-    episodesStatus: s.initial,
-    showStatus: s.initial,
+    loading: false,
     error: false,
   },
   reducers: {
+    getFullShow: (state, action) => ({
+      ...state,
+      loading: true,
+    }),
+    getFullShowSuccess: (state, action) => ({
+      ...state,
+      show: action.payload,
+      episodes: action.payload._embedded.episodes,
+      loading: false,
+    }),
+    getFullShowError: (state, action) => ({
+      ...state,
+      loading: false,
+      error: true,
+    }),
     getShow: (state, action) => ({
       ...state,
-      showStatus: s.loading,
+      loading: true,
     }),
     getShowSuccess: (state, action) => ({
       ...state,
-      showStatus: s.success,
+      loading: false,
       show: action.payload,
     }),
     getShowError: (state, action) => ({
       ...state,
-      showStatus: s.error,
+      loading: false,
       error: action.payload,
     }),
     getEpisodes: (state, action) => ({
       ...state,
-      episodesStatus: s.loading,
+      loading: true,
     }),
     getEpisodesSuccess: (state, action) => ({
       ...state,
-      episodesStatus: s.success,
+      loading: false,
       episodes: action.payload,
     }),
     getEpisodesError: (state, action) => ({
       ...state,
-      episodesStatus: s.error,
+      loading: false,
       error: action.payload,
+    }),
+    clearErrors: (state, action) => ({
+      ...state,
+      error: false,
     }),
   },
 });
@@ -50,19 +71,25 @@ export const {
   getEpisodes,
   getEpisodesSuccess,
   getEpisodesError,
+  getFullShow,
+  getFullShowSuccess,
+  getFullShowError,
+  clearErrors,
 } = showSlice.actions;
 export const selectors = {
   show: (state) => state.showReducer.show,
   episodes: (state) => state.showReducer.episodes,
   loading: (state) => state.showReducer.loading,
   error: (state) => state.showReducer.error,
-  showStatus: (state) => state.showReducer.showStatus,
-  episodesStatus: (state) => state.showReducer.episodesStatus,
   episodeById: (id) => (state) =>
     state.showReducer.episodes &&
     state.showReducer.episodes.filter(
       (episode) => episode.id === Number(id)
     )[0],
+};
+
+export const clearErrorFromState = () => (dispatch) => {
+  dispatch(clearErrors());
 };
 
 export const fetchShow = (id) => async (dispatch) => {
@@ -82,6 +109,17 @@ export const fetchEpisodes = (id) => async (dispatch) => {
     dispatch(getEpisodesSuccess(episodes));
   } catch (e) {
     dispatch(getEpisodesError(e));
+  }
+};
+
+export const fetchShowAndEpisodes = (id) => async (dispatch) => {
+  dispatch(getFullShow());
+  try {
+    const showAndEpisodes = await getShowAndEpisodesById(id);
+    console.log(showAndEpisodes);
+    dispatch(getFullShowSuccess(showAndEpisodes));
+  } catch (e) {
+    dispatch(getFullShowError(e));
   }
 };
 
